@@ -16,6 +16,11 @@ const routes = [
         component: () => import('@/views/dashboard/users/UserList.vue'),
       },
       {
+        path: 'EmailSalesforce',
+        name: 'Email-Salesforce',
+        component: () => import('@/views/dashboard/email/salesforce/List.vue'),
+      },      
+      {
         path: '/card',
         name: 'card',
         component: () => import('@/views/Card.vue'),
