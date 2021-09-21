@@ -1,13 +1,13 @@
 <template>
   <div class="flex justify-between px-4 mt-4 sm:px-8">
-    <h2 class="text-2xl text-gray-600">User List</h2>
+    <h2 class="text-2xl text-gray-600">Tenant List</h2>
 
     <div class="flex items-center space-x-1 text-xs">
       <router-link to="/" class="font-bold text-indigo-700">Home</router-link>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
-      <span class="text-gray-600">Users</span>
+      <span class="text-gray-600">Tenants</span>
     </div>
   </div>
 
@@ -45,7 +45,7 @@
                 border border-gray-300
                 focus:outline-none focus:ring-gray-500 focus:ring-gray-500 focus:z-10
               "
-              placeholder="Search user"
+              placeholder="Search Tenant"
             />
           </div>
         </div>
@@ -77,11 +77,11 @@
                 class="h-5 w-5 text-blue-500 border-gray-300 rounded cursor-pointer focus:ring-0"
               />
             </th>
-            <th class="text-left text-gray-600">USER</th>
-            <th class="text-left text-gray-600">ROLE</th>
+            <th class="text-left text-gray-600">TENANT</th>
+            <th class="text-left text-gray-600">DESCRIPTION</th>
             <th class="text-left text-gray-600">STATUS</th>
             <th class="text-left text-gray-600">LAST ACTIVITY</th>
-            <th class="text-left text-gray-600">JOIN DATE</th>
+            <th class="text-left text-gray-600">DATE</th>
             <th class="text-right text-gray-600">ACTIONS</th>
           </tr>
         </thead>
@@ -95,14 +95,14 @@
               />
             </td>
             <td class="flex items-center py-4">
-              <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" :src="user.avatar" alt="" />
+              <!-- <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white" :src="user.avatar" alt="" /> -->
               <div class="px-4">
                 <div>
                   <a href="#" class="text-gray-600 font-bolder">{{ user.name }}</a>
                 </div>
-                <div class="font-bold text-sm">
+                <!-- <div class="font-bold text-sm">
                   {{ user.email }}
-                </div>
+                </div> -->
               </div>
             </td>
             <td>{{ user.role }}</td>
@@ -170,6 +170,32 @@
                     "
                   >
                     <div class="px-1 py-1">
+                                            <MenuItem v-slot="{ active }">
+                        <button
+                          :class="[
+                            active ? 'bg-red-400 text-white' : 'text-gray-900',
+                            'group flex rounded-md items-center w-full px-2 py-2 text-sm',
+                          ]"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 mr-2 text-violet-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
+                          </svg>
+                          Run
+                        </button>
+                        
+                      </MenuItem>
+
                       <MenuItem v-slot="{ active }">
                         <button
                           :class="[
@@ -217,6 +243,7 @@
                           </svg>
                           Delete
                         </button>
+                        
                       </MenuItem>
                     </div>
                   </MenuItems>

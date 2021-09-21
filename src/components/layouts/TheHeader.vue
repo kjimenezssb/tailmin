@@ -15,10 +15,10 @@
       <MenuButton class="flex items-center space-x-2 px-2 py-3 text-sm hover:bg-gray-200 focus:outline-none">
         <img
           class="h-8 w-8 rounded-full"
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+          src="https://ssbinfo.com/wp-content/uploads/2020/07/Shane-Rose-Pic-150x150.jpg"
           alt=""
         />
-        <span>John Doe</span>
+        <span>Shane Rose</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4 text-gray-600"
