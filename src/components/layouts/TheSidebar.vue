@@ -30,32 +30,6 @@
           </li>
         </router-link>
 
-        <li class="px-4 hover:bg-gray-700">
-          <a href="#" class="py-3 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
-              />
-            </svg>
-            New Integrations
-          </a>
-        </li>
-
         <li>
           <Disclosure v-slot="{ open }" :default-open="isUserManagementActive">
             <DisclosureButton
@@ -95,7 +69,7 @@
                 <li>
                     <DisclosurePanel>
                       <ul>
-                        <router-link v-slot="{ isExactActive, href, navigate }" to="/users" custom>
+                        <router-link v-slot="{ isExactActive, href, navigate }" to="/analyticsBigQ" custom>
                           <li
                             class="pl-12"
                             :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']"
@@ -160,7 +134,7 @@
                 <li>
                     <DisclosurePanel>
                       <ul>
-                        <router-link v-slot="{ isExactActive, href, navigate }" to="/users" custom>
+                        <router-link v-slot="{ isExactActive, href, navigate }" to="/crmEmma" custom>
                           <li
                             class="pl-12"
                             :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']"
@@ -183,7 +157,7 @@
 
                     <DisclosurePanel>
                       <ul>
-                        <router-link v-slot="{ isExactActive, href, navigate }" to="/users" custom>
+                        <router-link v-slot="{ isExactActive, href, navigate }" to="/crmSalesforce" custom>
                           <li
                             class="pl-12"
                             :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']"
@@ -249,7 +223,7 @@
                 <li>
                     <DisclosurePanel>
                       <ul>
-                        <router-link v-slot="{ isExactActive, href, navigate }" to="/users" custom>
+                        <router-link v-slot="{ isExactActive, href, navigate }" to="/emailEmma" custom>
                           <li
                             class="pl-12"
                             :class="[isExactActive ? 'bg-gray-500 text-gray-800' : 'hover:bg-gray-700']"
@@ -347,13 +321,13 @@ export default {
     const route = useRoute()
 
     const isUserManagementActive = computed(() => {
-      const names = ['email-Salesforce', 'user-list', 'user-detail', 'roles', 'permissions']
+      const names = ['email-salesforce', 'email-emma', 'crm-salesforce', 'crm-emma', 'analytics-bigq', 'user-list', 'user-detail', 'roles', 'permissions']
 
       return names.includes(route.name)
     })
 
     const isUserActive = computed(() => {
-      const names = ['email-Salesforce', 'user-list', 'user-detail']
+      const names = ['email-salesforce', 'email-emma', 'crm-salesforce', 'crm-emma', 'analytics-bigq', 'user-list', 'user-detail']
 
       return names.includes(route.name)
     })

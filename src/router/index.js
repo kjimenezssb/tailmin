@@ -16,8 +16,28 @@ const routes = [
         component: () => import('@/views/dashboard/users/UserList.vue'),
       },
       {
-        path: 'EmailSalesforce',
-        name: 'Email-Salesforce',
+        path: 'analyticsBigQ',
+        name: 'analytics-bigq',
+        component: () => import('@/views/dashboard/analytics/bigq/List.vue'),
+      },        
+      {
+        path: 'crmEmma',
+        name: 'crm-emma',
+        component: () => import('@/views/dashboard/crm/emma/List.vue'),
+      },   
+      {
+        path: 'crmSalesforce',
+        name: 'crm-salesforce',
+        component: () => import('@/views/dashboard/crm/salesforce/List.vue'),
+      },       
+      {
+        path: 'emailEmma',
+        name: 'email-emma',
+        component: () => import('@/views/dashboard/email/emma2/List.vue'),
+      },   
+      {
+        path: 'emailSalesforce',
+        name: 'email-salesforce',
         component: () => import('@/views/dashboard/email/salesforce/List.vue'),
       },      
       {
