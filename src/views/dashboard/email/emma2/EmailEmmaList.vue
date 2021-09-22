@@ -1,25 +1,16 @@
 <template>
-<div>
-
-<GenericIntegrationList
-  title = "Email Emma"/>
-
-</div>
-
+  <div>
+    <GenericIntegrationList title="Email Emma" />
+  </div>
 </template>
 
 <script>
 import userList from '@/data/users/userList.json'
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 import { ref } from 'vue'
 import GenericIntegrationList from '@/views/dashboard/generic/GenericIntegrationList.vue'
 
 export default {
   components: {
-    Menu,
-    MenuButton,
-    MenuItems,
-    MenuItem,
     GenericIntegrationList,
   },
 
