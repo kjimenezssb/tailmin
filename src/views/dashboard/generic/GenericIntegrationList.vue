@@ -75,7 +75,7 @@
           </div>
 
           <label class="block mt-4">
-            <span class="text-gray-700">Pick a Tenant1</span>
+            <span class="text-gray-700">Pick a Tenant</span>
             <select class="form-select mt-1 block w-full" @change="getDataSource($event)">
               <option v-for="(opt, index) in tenantList" :value="opt.TenantID" :key="index">
                 {{ opt.TenantName }}
@@ -312,12 +312,14 @@
                       <MenuItem v-slot="{ active }">
                         <button
                           :class="[
-                            active ? 'bg-red-400 text-white' : 'text-gray-900',
+                            active ? 'bg-green-400 text-white' : 'text-gray-900',
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
+                        
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                           Run
                         </button>
@@ -619,6 +621,22 @@ export default {
       axios.get(url).then((result) => {
         console.log(result.data)
         this.tenantList = result.data
+
+        var TenantId = this.tenantList[0].TenantID;
+        this.fetchingDataSources = true
+        
+        const url = 'https://death-to-retool.azurewebsites.net/api/datasources/' + TenantId;
+        console.log(url)
+        axios.get(url).then((result) => {
+          console.log(result.data)
+          this.tenantDataSources = result.data
+          console.log(this.tenantDataSources)
+          .catch(() => {})
+          .finally(() => {
+              this.fetchingDataSources = false
+          })
+        })
+
         console.log(this.tenantList)
           .catch(() => {})
           .finally(() => {
@@ -633,6 +651,7 @@ export default {
       //       this.fetchingTenants = false
       //   })
     },
+    
     getDataSource(event) {
       
       var TenantId = event.target.value;
@@ -644,10 +663,11 @@ export default {
         console.log(result.data)
         this.tenantDataSources = result.data
         console.log(this.tenantDataSources)
-          // .catch(() => {})
-          // .finally(() => {
-          //   this.fetchingDataSources = false
+         .catch(() => {})
+         .finally(() => {
+            this.fetchingDataSources = false
         })
+      })
     },
   },
 
