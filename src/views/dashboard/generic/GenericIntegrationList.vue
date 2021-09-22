@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between px-4 mt-4 sm:px-8">
-    <h2 class="text-2xl text-gray-600">{{title}}</h2>
+    <h2 class="text-2xl text-gray-600">{{ title }}</h2>
 
     <div class="flex items-center space-x-1 text-xs">
       <router-link to="/" class="font-bold text-indigo-700">Home</router-link>
@@ -85,14 +85,12 @@
 
           <label class="block mt-4">
             <span class="text-gray-700">Pick Tenant Data Source</span>
-            <select class="form-select mt-1 block w-full" >
-              <option v-for="(opt, index) in tenantDataSources"  :value="opt.TenantDataSourceID" :key="index">
+            <select class="form-select mt-1 block w-full">
+              <option v-for="(opt, index) in tenantDataSources" :value="opt.TenantDataSourceID" :key="index">
                 {{ opt.FriendlyName }}
               </option>
             </select>
           </label>
-
-
         </div>
         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
           <button
@@ -316,9 +314,20 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                            />
+                          </svg>
                           Run
                         </button>
                       </MenuItem>
@@ -330,8 +339,19 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                            />
                           </svg>
                           Edit
                         </button>
@@ -343,8 +363,19 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 mr-2"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                            />
                           </svg>
                           Delete
                         </button>
@@ -616,41 +647,37 @@ export default {
       this.fetchingTenants = true
       const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
       console.log(url)
-      axios.get(url).then((result) => {
-        console.log(result.data)
-        this.tenantList = result.data
-        console.log(this.tenantList)
-          .catch(() => {})
-          .finally(() => {
-            this.fetchingTenants = false
+      axios
+        .get(url)
+        .then((result) => {
+          console.log(result.data)
+          this.tenantList = result.data
         })
-      })
-      // axios.get().then((response) => {
-      //       console.log(response)
-      //     })
-      //     .catch(() => {})
-      //     .finally(() => {
-      //       this.fetchingTenants = false
-      //   })
+        .catch(() => {
+          console.log('ERROR')
+        })
+        .finally(() => {
+          this.fetchingTenants = false
+        })
     },
     getDataSource(event) {
-      
-      var TenantId = event.target.value;
+      const TenantId = event.target.value
       this.fetchingDataSources = true
-      
-      const url = 'https://death-to-retool.azurewebsites.net/api/datasources/' + TenantId;
+      const url = 'https://death-to-retool.azurewebsites.net/api/datasources/' + TenantId
       console.log(url)
-      axios.get(url).then((result) => {
-        console.log(result.data)
-        this.tenantDataSources = result.data
-        console.log(this.tenantDataSources)
-          // .catch(() => {})
-          // .finally(() => {
-          //   this.fetchingDataSources = false
+      axios
+        .get(url)
+        .then((result) => {
+          console.log(result.data)
+          this.tenantDataSources = result.data
+        })
+        .catch(() => {
+          console.log('ERROR')
+        })
+        .finally(() => {
+          this.fetchingTenants = false
         })
     },
   },
-
 }
-
 </script>
