@@ -75,18 +75,9 @@
           </div>
 
           <label class="block mt-4">
-            <span class="text-gray-700">Pick an integration</span>
-            <select class="form-select mt-1 block w-full">
-              <option v-for="(opt, index) in tenantList" :key="index">
-                {{ opt.TenantName }}
-              </option>
-            </select>
-          </label>
-
-          <label class="block mt-4">
-            <span class="text-gray-700">Pick a Tenant</span>
-            <select class="form-select mt-1 block w-full">
-              <option v-for="(opt, index) in tenantList" :key="index">
+            <span class="text-gray-700">Pick a Tenant1</span>
+            <select class="form-select mt-1 block w-full" @change="getDataSource($event)">
+              <option v-for="(opt, index) in tenantList" :value="opt.TenantID" :key="index">
                 {{ opt.TenantName }}
               </option>
             </select>
@@ -94,9 +85,9 @@
 
           <label class="block mt-4">
             <span class="text-gray-700">Pick Tenant Data Source</span>
-            <select class="form-select mt-1 block w-full">
-              <option v-for="(opt, index) in tenantList" :key="index">
-                {{ opt.TenantName }}
+            <select class="form-select mt-1 block w-full" >
+              <option v-for="(opt, index) in tenantDataSources"  :value="opt.TenantDataSourceID" :key="index">
+                {{ opt.FriendlyName }}
               </option>
             </select>
           </label>
@@ -325,20 +316,9 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 mr-2 text-violet-400"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
-                          </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
                           Run
                         </button>
                       </MenuItem>
@@ -350,19 +330,8 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 mr-2 text-violet-400"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                            />
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                           </svg>
                           Edit
                         </button>
@@ -374,19 +343,8 @@
                             'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                           ]"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 mr-2 text-violet-400"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                            />
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                           </svg>
                           Delete
                         </button>
@@ -636,6 +594,7 @@ export default {
       fetchingTenants: false,
       tenantList: [],
       entities: [],
+      fetchingDataSources: false,
       tenantDataSources: [],
     }
   },
@@ -674,6 +633,24 @@ export default {
       //       this.fetchingTenants = false
       //   })
     },
+    getDataSource(event) {
+      
+      var TenantId = event.target.value;
+      this.fetchingDataSources = true
+      
+      const url = 'https://death-to-retool.azurewebsites.net/api/datasources/' + TenantId;
+      console.log(url)
+      axios.get(url).then((result) => {
+        console.log(result.data)
+        this.tenantDataSources = result.data
+        console.log(this.tenantDataSources)
+          // .catch(() => {})
+          // .finally(() => {
+          //   this.fetchingDataSources = false
+        })
+    },
   },
+
 }
+
 </script>
