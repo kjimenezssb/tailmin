@@ -67,8 +67,8 @@
               <div class="mt-2">
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick a Tenant</span>
-                  <select class="form-select mt-1 block w-full" @change="onTenantSelectChange($event)">
-                    <option v-for="(opt, index) in tenantList" :value="opt.TenantID" :key="index">
+                  <select v-model="currentTenant" class="form-select mt-1 block w-full" @change="onTenantSelectChange($event)">
+                    <option v-for="(opt, index) in tenantList" :value="opt" :key="index">
                       {{ opt.TenantName }}
                     </option>
                   </select>
@@ -76,7 +76,7 @@
 
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick Tenant Data Source</span>
-                  <select class="form-select mt-1 block w-full">
+                  <select class="form-select mt-1 block w-full"  @change="onTenantDataSourceSelectChange($event)">
                     <option v-for="(opt, index) in tenantDataSources" :value="opt.TenantDataSourceID" :key="index">
                       {{ opt.FriendlyName }}
                     </option>
@@ -102,9 +102,9 @@
                     focus:outline-none
                     focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
                   "
-                  @click="closeDialog"
+                  @click="openRunDialog"
                 >
-                  Got it, thanks!
+                  Continue
                 </button>
               </div>
             </div>
@@ -113,6 +113,151 @@
       </div>
     </Dialog>
   </TransitionRoot>
+
+  <TransitionRoot appear :show="runDialogVisible" as="template">
+    <Dialog as="div" @close="closeModal">
+      <DialogOverlay class="fixed inset-0 bg-black opacity-30" />
+
+      <div class="fixed inset-0 z-10 overflow-y-auto">
+        <div class="min-h-screen px-4 text-center">
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <DialogOverlay class="fixed inset-0" />
+          </TransitionChild>
+
+          <span class="inline-block h-screen align-middle" aria-hidden="true"> &#8203; </span>
+
+          <TransitionChild
+            as="template"
+            enter="duration-300 ease-out"
+            enter-from="opacity-0 scale-95"
+            enter-to="opacity-100 scale-100"
+            leave="duration-200 ease-in"
+            leave-from="opacity-100 scale-100"
+            leave-to="opacity-0 scale-95"
+          >
+            <div
+              class="
+                inline-block
+                w-full
+                max-w-md
+                p-6
+                my-8
+                overflow-hidden
+                text-left
+                align-middle
+                transition-all
+                transform
+                bg-white
+                shadow-xl
+                rounded-2xl
+              "
+            >
+              <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                RUN
+              </DialogTitle>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">Please select parameters.</p>
+              </div>
+
+              <div class="mt-2">
+                <label class="block mt-4">
+                  <span class="text-gray-700">Tenant Url: </span>
+                    {{currentTenant.TenantUrl}} 
+                </label>
+                <label class="block mt-4">
+                  <span class="text-gray-700">Type: </span>
+                    {{ title }} 
+                </label>          
+
+                <label class="block mt-4">
+                  <span class="text-gray-700">Enviroment</span>
+                  <select v-model="Enviroment" Id= "Enviroment" class="form-select mt-1 block w-full">
+                    <option value="dev">Dev</option>
+                    <option value="test">Test</option>
+                    <option value="production">Production</option>
+                  </select>
+                </label>
+
+                <label class="block mt-4">
+                  <span class="text-gray-700">Stream To Execute</span>
+                  <select  v-model="StreamToExecute" Id= "StreamToExecute" class="form-select mt-1 block w-full">
+                    <option value="Stream1">Stream 1</option>
+                    <option value="Stream2">Stream 2</option>
+                    <option value="Stream3">Stream 3</option>
+                  </select>
+                </label>
+
+                <label class="block mt-4">
+                  <span class="text-gray-700">Mode</span>
+                  <select v-model="Mode" id="Mode" class="form-select mt-1 block w-full">
+                    <option value="daily">Daily</option>
+                    <option value="missing">Missing</option>
+                    <option value="backfill">Backfill</option>
+                  </select>
+                </label>
+                <label class="block mt-4">
+                  <span class="text-gray-700">Notifications</span>
+                  <select v-model="Notifications" id="Notifications" class="form-select mt-1 block w-full">
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+                  </select>
+                </label>
+                <label class="block mt-4">
+                  <span class="text-gray-700">Multithreaded</span>
+                  <select v-model="Multithreaded" id="Multithreaded" class="form-select mt-1 block w-full">
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+                  </select>
+                </label>                                
+                
+                <label class="block mt-4">
+                  <span class="text-gray-700">Accounts</span>
+                  <select v-model="Accounts" id="Accounts" class="form-select mt-1 block w-full">
+                    <option value="Account1">Account 1</option>
+                    <option value="Account2">Account 2</option>
+                    <option value="Account3">Account 3</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="mt-4">
+                <button
+                  type="button"
+                  class="
+                    inline-flex
+                    justify-center
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    text-blue-900
+                    bg-blue-100
+                    border border-transparent
+                    rounded-md
+                    hover:bg-blue-200
+                    focus:outline-none
+                    focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
+                  "
+                  @click="closeDialog"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </TransitionChild>
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
+
 
   <div class="p-4 mt-8 sm:px-8 sm:py-4">
     <div class="p-4 bg-white rounded">
@@ -616,12 +761,24 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      runDialogVisible: false,
       fetchingTenants: false,
       currentTenant: null,
+      currentTenantDataSource: null,
       tenantList: [],
       entities: [],
       fetchingDataSources: false,
       tenantDataSources: [],
+      Enviroment: null,
+      StreamToExecute: null,
+      Mode: null,
+      Notifications: false,
+      Multithreaded: false,
+      Mode: null,
+      cAccounts: null,
+
+
+
     }
   },
   mounted: function () {
@@ -632,8 +789,23 @@ export default {
     openDialog: function () {
       this.dialogVisible = true
     },
-    closeDialog: function () {
+    openRunDialog: function () {
       this.dialogVisible = false
+      this.runDialogVisible = true
+    },
+    closeDialog: function () {
+      console.log('TenantUrl: ' + this.currentTenant.TenantUrl )
+      console.log('title: ' + this.title )
+      console.log('Enviroment: ' + this.Enviroment )
+      console.log('StreamToExecute: ' + this.StreamToExecute )
+      console.log('Mode: ' + this.Mode )
+      console.log('Notifications: ' + this.Notifications )
+      console.log('Multithreaded: ' + this.Multithreaded )
+      console.log('Mode: ' + this.Mode )
+      console.log('Accounts: ' + this.Accounts )
+
+      this.dialogVisible = false
+      this.runDialogVisible = false
     },
     handleIntegrationCreation: function () {
       console.log('Should create the integration')
@@ -649,20 +821,28 @@ export default {
           this.tenantList = result.data
           console.log(this.tenantList)
         })
-        .catch(() => {})
+        .catch(() => {
+          console.log('No tenants');
+          this.tenantList = [ {TenantID: '12345', TenantName: 'Konrad', TenantUrl: 'Konrad'},
+                              {TenantID: '12346', TenantName: 'Mike', TenantUrl: 'Mike'}]
+        })
         .finally(() => {
           this.currentTenant = this.tenantList.length ? this.tenantList[0].TenantID : null
           this.fetchingTenants = false
-          this.fetchTenantDataSources()
+          //this.fetchTenantDataSources()
         })
     },
     onTenantSelectChange(event) {
-      this.currentTenant = event.target.value
+      console.log('This', this.currentTenant)
       this.fetchTenantDataSources()
+    },
+    onTenantDataSourceSelectChange(event) {
+      this.currentTenantDataSource = event.target.value
     },
     fetchTenantDataSources() {
       this.fetchingDataSources = true
-      const url = `https://death-to-retool.azurewebsites.net/api/datasources/${this.currentTenant}`
+      console.log(this.currentTenant.TenantID)
+      const url = `https://death-to-retool.azurewebsites.net/api/datasources/${this.currentTenant.TenantID}`
       console.log(url)
       axios
         .get(url)
