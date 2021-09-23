@@ -18,6 +18,10 @@
     <ProcessDialog :title="title" :current-tenant="currentTenant" :close-dialog="closeRunDialog" />
   </TransitionRoot>
 
+  <TransitionRoot appear :show="deleteDialogVisible" as="template">
+    <DeleteDialog :close-dialog="closeDeleteDialog" />
+  </TransitionRoot>
+
   <div class="p-4 mt-8 sm:px-8 sm:py-4">
     <div class="p-4 bg-white rounded">
       <div class="flex justify-between">
@@ -77,7 +81,13 @@
           </div>
         </div>
       </div>
-      <IntegrationTable :open-run-dialog="openRunDialog" :integration-name="integrationName" :rows="rows" />
+      <IntegrationTable
+        :open-run-dialog="openRunDialog"
+        :integration-name="integrationName"
+        :rows="rows"
+        :open-edit-dialog="openDialog"
+        :open-delete-dialog="openDeleteDialog"
+      />
     </div>
   </div>
 </template>
@@ -87,6 +97,7 @@ import userList from '@/data/users/userList.json'
 import IntegrationTable from './IntegrationTable.vue'
 import IntegrationDialog from './IntegrationDialog.vue'
 import ProcessDialog from './ProcessDialog.vue'
+import DeleteDialog from './DeleteDialog.vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { ref } from 'vue'
 import axios from 'axios'
@@ -97,6 +108,7 @@ export default {
     TransitionRoot,
     IntegrationTable,
     ProcessDialog,
+    DeleteDialog,
   },
   props: {
     title: {
@@ -120,6 +132,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      deleteDialogVisible: false,
       runDialogVisible: false,
       fetchingTenants: false,
       currentTenant: null,
@@ -144,6 +157,13 @@ export default {
     },
     closeDialog: function () {
       this.dialogVisible = false
+      this.fetchData()
+    },
+    openDeleteDialog: function () {
+      this.deleteDialogVisible = true
+    },
+    closeDeleteDialog: function () {
+      this.deleteDialogVisible = false
       this.fetchData()
     },
     openRunDialog: function () {

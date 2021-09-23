@@ -45,34 +45,10 @@
             "
           >
             <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-              Create new NOT STITCH integration
+              Are you sure you want to delete this?
             </DialogTitle>
             <div class="mt-2">
               <p class="text-sm text-gray-500">Please select the tenant and data source you want to configure</p>
-            </div>
-
-            <div class="mt-2">
-              <label class="block mt-4">
-                <span class="text-gray-700">Pick a Tenant</span>
-                <select
-                  v-model="currentTenant"
-                  class="form-select mt-1 block w-full"
-                  @change="onTenantSelectChange($event)"
-                >
-                  <option v-for="(opt, index) in tenantList" :key="index" :value="opt">
-                    {{ opt.TenantName }}
-                  </option>
-                </select>
-              </label>
-
-              <label class="block mt-4">
-                <span class="text-gray-700">Pick Tenant Data Source</span>
-                <select v-model="currentDataSource" class="form-select mt-1 block w-full">
-                  <option v-for="(opt, index) in tenantDataSources" :key="index" :value="opt.TenantDataSourceID">
-                    {{ opt.FriendlyName }}
-                  </option>
-                </select>
-              </label>
             </div>
 
             <div v-if="currentDataSource" class="mt-4">

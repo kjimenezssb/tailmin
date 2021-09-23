@@ -118,6 +118,7 @@
                         active ? 'bg-gray-400 text-white' : 'text-gray-900',
                         'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                       ]"
+                      @click="openEditDialog"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -142,6 +143,7 @@
                         active ? 'bg-red-400 text-white' : 'text-gray-900',
                         'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                       ]"
+                      @click="openDeleteDialog"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -182,6 +184,16 @@ export default {
   },
   props: {
     openRunDialog: {
+      type: Function,
+      default: null,
+      required: false,
+    },
+    openEditDialog: {
+      type: Function,
+      default: null,
+      required: false,
+    },
+    openDeleteDialog: {
       type: Function,
       default: null,
       required: false,
