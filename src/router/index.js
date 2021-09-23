@@ -16,9 +16,9 @@ const routes = [
         component: () => import('@/views/dashboard/analytics/bigq/BigQueryList.vue'),
       },
       {
-        path: 'crm/emma',
-        name: 'crm-emma',
-        component: () => import('@/views/dashboard/crm/emma/CRMEmmaList.vue'),
+        path: 'crm/dynamics',
+        name: 'crm-dynamics',
+        component: () => import('@/views/dashboard/crm/dynamics/CRMDynamics.vue'),
       },
       {
         path: 'crm/salesforce',
@@ -28,7 +28,7 @@ const routes = [
       {
         path: 'email/emma',
         name: 'email-emma',
-        component: () => import('@/views/dashboard/email/emma2/EmailEmmaList.vue'),
+        component: () => import('@/views/dashboard/email/emma/EmailEmmaList.vue'),
       },
       {
         path: 'email/salesforce',

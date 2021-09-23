@@ -212,27 +212,6 @@
                 >
                   Cancel
                 </button>
-                <button
-                  type="button"
-                  class="
-                    inline-flex
-                    justify-center
-                    px-4
-                    py-2
-                    text-sm
-                    font-medium
-                    text-green-900
-                    bg-green-100
-                    border border-transparent
-                    rounded-md
-                    hover:bg-green-200
-                    focus:outline-none
-                    focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-500
-                  "
-                  @click="submitIntegration"
-                >
-                  Save
-                </button>
               </div>
             </div>
           </div>
@@ -264,15 +243,9 @@ export default {
       default: '',
       required: false,
     },
-    integrationName: {
-      type: String,
-      default: '',
-      required: false,
-    },
   },
   data() {
     return {
-      submitting: false,
       fetchingTenants: false,
       currentTenant: null,
       currentDataSource: null,
@@ -340,28 +313,6 @@ export default {
         const response = await axios.get(url)
         this.tenantDataSources = response.data
         this.fetchingDataSources = false
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    submitIntegration: async function () {
-      console.log('INTEGRATION SUBMITTED')
-      this.submitting = true
-      console.log(this.currentTenant)
-      const payload = {
-        EntityName: this.integrationName,
-        TenantId: this.currentTenant.TenantID,
-        TenantDataSourceId: this.currentDataSource.TenantDataSourceID,
-        CustomProperties: this.selectedProperties,
-      }
-      console.log(payload)
-      const url = 'https://death-to-retool.azurewebsites.net/api/entityInstance'
-      console.log(url)
-      try {
-        const response = await axios.post(url, payload)
-        console.log(response)
-        this.submitting = false
-        this.closeDialog()
       } catch (error) {
         console.log(error)
       }

@@ -1,5 +1,5 @@
 <template>
-  <GenericIntegrationList title="AXS" />
+  <GenericIntegrationList title="AXS" integration-name="axs" />
 </template>
 
 <script>

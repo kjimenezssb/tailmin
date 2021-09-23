@@ -1,5 +1,5 @@
 <template>
-  <GenericIntegrationList title="CRM Salesforce" />
+  <GenericIntegrationList title="CRM Salesforce" integration-name="sfdc" />
 </template>
 
 <script>

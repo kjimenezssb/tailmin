@@ -1,5 +1,5 @@
 <template>
-  <GenericIntegrationList title="Email Salesforce" />
+  <GenericIntegrationList title="Email Salesforce" integration-name="sfmc" />
 </template>
 
 <script>

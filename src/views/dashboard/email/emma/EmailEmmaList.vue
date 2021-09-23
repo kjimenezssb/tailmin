@@ -1,5 +1,5 @@
 <template>
-  <IntegrationList title="Email Emma" />
+  <IntegrationList title="Email Emma" integration-name="Emma" />
 </template>
 
 <script>

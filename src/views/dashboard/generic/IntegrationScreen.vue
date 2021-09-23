@@ -11,7 +11,7 @@
   </div>
 
   <TransitionRoot appear :show="dialogVisible" as="template">
-    <IntegrationDialog :close-dialog="closeDialog" />
+    <IntegrationDialog :close-dialog="closeDialog" :integration-name="integrationName" />
   </TransitionRoot>
 
   <TransitionRoot appear :show="runDialogVisible" as="template">
@@ -77,7 +77,7 @@
           </div>
         </div>
       </div>
-      <IntegrationTable :open-run-dialog="openRunDialog" />
+      <IntegrationTable :open-run-dialog="openRunDialog" :integration-name="integrationName" :rows="rows" />
     </div>
   </div>
 </template>
@@ -89,7 +89,7 @@ import IntegrationDialog from './IntegrationDialog.vue'
 import ProcessDialog from './ProcessDialog.vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { ref } from 'vue'
-// import axios from 'axios'
+import axios from 'axios'
 
 export default {
   components: {
@@ -100,6 +100,11 @@ export default {
   },
   props: {
     title: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    integrationName: {
       type: String,
       default: '',
       required: false,
@@ -118,11 +123,6 @@ export default {
       runDialogVisible: false,
       fetchingTenants: false,
       currentTenant: null,
-      // currentTenant: {
-      //   TenantID: 'TBSE',
-      //   TenantURL: 'tbse',
-      //   TenantName: 'TampaBay',
-      // },
       currPropertyName: 'AccountConfig',
       currPropertyValue: null,
       selectedProperties: [],
@@ -131,6 +131,7 @@ export default {
       entities: [],
       fetchingDataSources: false,
       tenantDataSources: [],
+      rows: [],
     }
   },
   mounted: function () {
@@ -143,6 +144,7 @@ export default {
     },
     closeDialog: function () {
       this.dialogVisible = false
+      this.fetchData()
     },
     openRunDialog: function () {
       this.runDialogVisible = true
@@ -154,18 +156,16 @@ export default {
       console.log('Should create the integration')
     },
     fetchData: async function () {
-      // this.fetchingTenants = true
-      // const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
-      // console.log(url)
-      // try {
-      //   const response = await axios.get(url)
-      //   this.tenantList = response.data
-      //   this.currentTenant = this.tenantList.length ? this.tenantList[0] : null
-      //   this.fetchTenantDataSources()
-      //   this.fetchingTenants = false
-      // } catch (error) {
-      //   console.log(error)
-      // }
+      this.fetchingTenants = true
+      const url = `https://death-to-retool.azurewebsites.net/api/entityInstance?name=${this.integrationName}`
+      console.log(url)
+      try {
+        const response = await axios.get(url)
+        this.rows = response.data
+        this.loading = false
+      } catch (error) {
+        console.log(error)
+      }
     },
     addProperty: function () {
       console.log(this.currPropertyName)

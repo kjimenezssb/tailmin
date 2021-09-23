@@ -1,5 +1,5 @@
 <template>
-  <GenericIntegrationList title="Big Query" />
+  <GenericIntegrationList title="Big Query" integration-name="bigquery" />
 </template>
 
 <script>

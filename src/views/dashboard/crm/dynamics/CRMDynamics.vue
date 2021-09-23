@@ -1,5 +1,5 @@
 <template>
-  <GenericIntegrationList title="CRM Emma" />
+  <GenericIntegrationList title="CRM Dynamics" integration-name="mscrm" />
 </template>
 
 <script>
