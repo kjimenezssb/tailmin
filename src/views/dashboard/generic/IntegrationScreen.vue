@@ -89,7 +89,7 @@ import IntegrationDialog from './IntegrationDialog.vue'
 import ProcessDialog from './ProcessDialog.vue'
 import { TransitionRoot } from '@headlessui/vue'
 import { ref } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   components: {
@@ -117,12 +117,12 @@ export default {
       dialogVisible: false,
       runDialogVisible: false,
       fetchingTenants: false,
-      // currentTenant: null,
-      currentTenant: {
-        TenantID: 'TBSE',
-        TenantURL: 'tbse',
-        TenantName: 'TampaBay',
-      },
+      currentTenant: null,
+      // currentTenant: {
+      //   TenantID: 'TBSE',
+      //   TenantURL: 'tbse',
+      //   TenantName: 'TampaBay',
+      // },
       currPropertyName: 'AccountConfig',
       currPropertyValue: null,
       selectedProperties: [],
@@ -153,23 +153,19 @@ export default {
     handleIntegrationCreation: function () {
       console.log('Should create the integration')
     },
-    fetchData: function () {
-      this.fetchingTenants = true
-      const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantList = result.data
-          console.log(this.tenantList)
-        })
-        .catch(() => {})
-        .finally(() => {
-          // this.currentTenant = this.tenantList.length ? this.tenantList[0].TenantID : null
-          this.fetchingTenants = false
-          this.fetchTenantDataSources()
-        })
+    fetchData: async function () {
+      // this.fetchingTenants = true
+      // const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
+      // console.log(url)
+      // try {
+      //   const response = await axios.get(url)
+      //   this.tenantList = response.data
+      //   this.currentTenant = this.tenantList.length ? this.tenantList[0] : null
+      //   this.fetchTenantDataSources()
+      //   this.fetchingTenants = false
+      // } catch (error) {
+      //   console.log(error)
+      // }
     },
     addProperty: function () {
       console.log(this.currPropertyName)
@@ -186,24 +182,26 @@ export default {
       }
     },
     onTenantSelectChange(event) {
-      this.currentTenant = event.target.value
+      console.log(event)
       this.fetchTenantDataSources()
     },
     fetchTenantDataSources() {
       this.fetchingDataSources = true
-      const url = `https://death-to-retool.azurewebsites.net/api/datasources/${this.currentTenant}`
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantDataSources = result.data
-          console.log(this.tenantDataSources)
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.fetchingDataSources = false
-        })
+      console.log(this.currentTenant)
+      console.log(this.currentTenant.TenantID)
+      // const url = `https://death-to-retool.azurewebsites.net/api/datasources/${this.currentTenant.TenantID}`
+      // console.log(url)
+      // axios
+      //   .get(url)
+      //   .then((result) => {
+      //     console.log(result.data)
+      //     this.tenantDataSources = result.data
+      //     console.log(this.tenantDataSources)
+      //   })
+      //   .catch(() => {})
+      //   .finally(() => {
+      //     this.fetchingDataSources = false
+      //   })
     },
   },
 }

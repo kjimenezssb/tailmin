@@ -104,12 +104,13 @@
                 <div class="px-1 py-1">
                   <MenuItem v-slot="{ active }">
                     <button
-                      @click="openRunDialog"
                       :class="[
                         active ? 'bg-green-400 text-white' : 'text-gray-900',
                         'group flex rounded-md items-center w-full px-2 py-2 text-sm',
                       ]"
+                      @click="openRunDialog"
                     >
+                      Run
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 mr-2"
@@ -130,7 +131,6 @@
                           d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
-                      Run
                     </button>
                   </MenuItem>
 

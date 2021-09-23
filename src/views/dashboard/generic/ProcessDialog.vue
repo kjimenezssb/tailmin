@@ -52,7 +52,7 @@
             <div class="mt-2">
               <label class="block mt-4">
                 <span class="text-gray-700">Tenant Url: </span>
-                {{ currentTenant.TenantUrl }}
+                <!-- {{ TenantUrl }} -->
               </label>
               <label class="block mt-4">
                 <span class="text-gray-700">Type: </span>
@@ -180,11 +180,11 @@ export default {
       default: '',
       required: true,
     },
-    currentTenant: {
-      type: Object,
-      default: null,
-      required: true,
-    },
+    // currentTenant: {
+    //   type: Object,
+    //   default: null,
+    //   required: true,
+    // },
     closeDialog: {
       type: Function,
       default: null,
