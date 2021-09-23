@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GenericIntegrationList from '@/views/dashboard/generic/IntegrationList.vue'
+import GenericIntegrationList from '@/views/dashboard/generic/IntegrationScreen.vue'
 
 export default {
   components: {

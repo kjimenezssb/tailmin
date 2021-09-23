@@ -68,7 +68,7 @@
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick a Tenant</span>
                   <select class="form-select mt-1 block w-full" @change="onTenantSelectChange($event)">
-                    <option v-for="(opt, index) in tenantList" :value="opt.TenantID" :key="index">
+                    <option v-for="(opt, index) in tenantList" :key="index" :value="opt.TenantID">
                       {{ opt.TenantName }}
                     </option>
                   </select>
@@ -77,7 +77,7 @@
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick Tenant Data Source</span>
                   <select class="form-select mt-1 block w-full">
-                    <option v-for="(opt, index) in tenantDataSources" :value="opt.TenantDataSourceID" :key="index">
+                    <option v-for="(opt, index) in tenantDataSources" :key="index" :value="opt.TenantDataSourceID">
                       {{ opt.FriendlyName }}
                     </option>
                   </select>
@@ -91,8 +91,8 @@
               <div class="mt-2">
                 <label class="block mt-4">
                   <span class="text-gray-700">Property name</span>
-                  <select class="form-select mt-1 block w-full" v-model="currPropertyName">
-                    <option v-for="(opt, index) in propertyList" :value="opt" :key="index">
+                  <select v-model="currPropertyName" class="form-select mt-1 block w-full">
+                    <option v-for="(opt, index) in propertyList" :key="index" :value="opt">
                       {{ opt }}
                     </option>
                   </select>

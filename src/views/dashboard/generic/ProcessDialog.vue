@@ -1,6 +1,7 @@
 <template>
-  <Dialog as="div" @close="closeModal">
-    <DialogOverlay />
+  <Dialog as="div" @close="closeDialog">
+    <DialogOverlay class="fixed inset-0 bg-black opacity-30" />
+
     <div class="fixed inset-0 z-10 overflow-y-auto">
       <div class="min-h-screen px-4 text-center">
         <TransitionChild
@@ -43,34 +44,94 @@
               rounded-2xl
             "
           >
-            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-              Create new NOT STITCH integration
-            </DialogTitle>
+            <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> RUN </DialogTitle>
             <div class="mt-2">
-              <p class="text-sm text-gray-500">Please select the tenant and data source you want to configure</p>
+              <p class="text-sm text-gray-500">Please select parameters.</p>
             </div>
 
             <div class="mt-2">
               <label class="block mt-4">
-                <span class="text-gray-700">Pick a Tenant1</span>
-                <select class="form-select mt-1 block w-full" @change="getDataSource($event)">
-                  <option v-for="(opt, index) in tenantList" :value="opt.TenantID" :key="index">
-                    {{ opt.TenantName }}
-                  </option>
+                <span class="text-gray-700">Tenant Url: </span>
+                {{ currentTenant.TenantUrl }}
+              </label>
+              <label class="block mt-4">
+                <span class="text-gray-700">Type: </span>
+                {{ title }}
+              </label>
+
+              <label class="block mt-4">
+                <span class="text-gray-700">Enviroment</span>
+                <select Id="Enviroment" v-model="Enviroment" class="form-select mt-1 block w-full">
+                  <option value="dev">Dev</option>
+                  <option value="test">Test</option>
+                  <option value="production">Production</option>
                 </select>
               </label>
 
               <label class="block mt-4">
-                <span class="text-gray-700">Pick Tenant Data Source</span>
-                <select class="form-select mt-1 block w-full">
-                  <option v-for="(opt, index) in tenantDataSources" :value="opt.TenantDataSourceID" :key="index">
-                    {{ opt.FriendlyName }}
-                  </option>
+                <span class="text-gray-700">Stream To Execute</span>
+                <select Id="StreamToExecute" v-model="StreamToExecute" class="form-select mt-1 block w-full">
+                  <option value="Stream1">Stream 1</option>
+                  <option value="Stream2">Stream 2</option>
+                  <option value="Stream3">Stream 3</option>
+                </select>
+              </label>
+
+              <label class="block mt-4">
+                <span class="text-gray-700">Mode</span>
+                <select id="Mode" v-model="Mode" class="form-select mt-1 block w-full">
+                  <option value="daily">Daily</option>
+                  <option value="missing">Missing</option>
+                  <option value="backfill">Backfill</option>
+                </select>
+              </label>
+              <label class="block mt-4">
+                <span class="text-gray-700">Notifications</span>
+                <select id="Notifications" v-model="Notifications" class="form-select mt-1 block w-full">
+                  <option value="True">True</option>
+                  <option value="False">False</option>
+                </select>
+              </label>
+              <label class="block mt-4">
+                <span class="text-gray-700">Multithreaded</span>
+                <select id="Multithreaded" v-model="Multithreaded" class="form-select mt-1 block w-full">
+                  <option value="True">True</option>
+                  <option value="False">False</option>
+                </select>
+              </label>
+
+              <label class="block mt-4">
+                <span class="text-gray-700">Accounts</span>
+                <select id="Accounts" v-model="Accounts" class="form-select mt-1 block w-full">
+                  <option value="Account1">Account 1</option>
+                  <option value="Account2">Account 2</option>
+                  <option value="Account3">Account 3</option>
                 </select>
               </label>
             </div>
 
             <div class="mt-4">
+              <button
+                type="button"
+                class="
+                  inline-flex
+                  justify-center
+                  px-4
+                  py-2
+                  text-sm
+                  font-medium
+                  text-gray-900
+                  bg-gray-100
+                  border border-transparent
+                  rounded-md
+                  hover:bg-gray-200
+                  focus:outline-none
+                  focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500
+                "
+                @click="closeDialog"
+              >
+                Cancel
+              </button>
               <button
                 type="button"
                 class="
@@ -88,9 +149,9 @@
                   focus:outline-none
                   focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500
                 "
-                @click="closeDialog"
+                @click="submitData"
               >
-                Got it, thanks!
+                Submit
               </button>
             </div>
           </div>
@@ -104,7 +165,7 @@
 import userList from '@/data/users/userList.json'
 import { TransitionChild, Dialog, DialogOverlay, DialogTitle } from '@headlessui/vue'
 import { ref } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   components: {
@@ -114,10 +175,20 @@ export default {
     DialogTitle,
   },
   props: {
-    visible: {
+    title: {
       type: String,
       default: '',
-      required: false,
+      required: true,
+    },
+    currentTenant: {
+      type: Object,
+      default: null,
+      required: true,
+    },
+    closeDialog: {
+      type: Function,
+      default: null,
+      required: true,
     },
   },
   setup() {
@@ -130,61 +201,31 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      runDialogVisible: false,
       fetchingTenants: false,
+      currentTenantDataSource: null,
       tenantList: [],
       entities: [],
       fetchingDataSources: false,
       tenantDataSources: [],
+      Enviroment: null,
+      StreamToExecute: null,
+      Mode: null,
+      Notifications: false,
+      Multithreaded: false,
+      Accounts: null,
     }
   },
   mounted: function () {
-    console.log('JUST MOUNTED COMPONENT')
-    this.fetchData()
+    console.log('JUST MOUNTED PROCESS DIALOG COMPONENT')
+    // this.fetchData()
   },
   methods: {
-    openDialog: function () {
-      this.dialogVisible = true
-    },
-    closeDialog: function () {
-      this.dialogVisible = false
+    submitData: function () {
+      console.log('SUBMITTING DATA')
     },
     handleIntegrationCreation: function () {
       console.log('Should create the integration')
-    },
-    fetchData: function () {
-      this.fetchingTenants = true
-      const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantList = result.data
-        })
-        .catch(() => {
-          console.log('ERROR')
-        })
-        .finally(() => {
-          this.fetchingTenants = false
-        })
-    },
-    getDataSource(event) {
-      const TenantId = event.target.value
-      this.fetchingDataSources = true
-      const url = 'https://death-to-retool.azurewebsites.net/api/datasources/' + TenantId
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantDataSources = result.data
-        })
-        .catch(() => {
-          console.log('ERROR')
-        })
-        .finally(() => {
-          this.fetchingTenants = false
-        })
     },
   },
 }

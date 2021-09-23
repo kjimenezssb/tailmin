@@ -67,8 +67,12 @@
               <div class="mt-2">
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick a Tenant</span>
-                  <select v-model="currentTenant" class="form-select mt-1 block w-full" @change="onTenantSelectChange($event)">
-                    <option v-for="(opt, index) in tenantList" :value="opt" :key="index">
+                  <select
+                    v-model="currentTenant"
+                    class="form-select mt-1 block w-full"
+                    @change="onTenantSelectChange($event)"
+                  >
+                    <option v-for="(opt, index) in tenantList" :key="index" :value="opt">
                       {{ opt.TenantName }}
                     </option>
                   </select>
@@ -76,8 +80,8 @@
 
                 <label class="block mt-4">
                   <span class="text-gray-700">Pick Tenant Data Source</span>
-                  <select class="form-select mt-1 block w-full"  @change="onTenantDataSourceSelectChange($event)">
-                    <option v-for="(opt, index) in tenantDataSources" :value="opt.TenantDataSourceID" :key="index">
+                  <select class="form-select mt-1 block w-full" @change="onTenantDataSourceSelectChange($event)">
+                    <option v-for="(opt, index) in tenantDataSources" :key="index" :value="opt.TenantDataSourceID">
                       {{ opt.FriendlyName }}
                     </option>
                   </select>
@@ -160,9 +164,7 @@
                 rounded-2xl
               "
             >
-              <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
-                RUN
-              </DialogTitle>
+              <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> RUN </DialogTitle>
               <div class="mt-2">
                 <p class="text-sm text-gray-500">Please select parameters.</p>
               </div>
@@ -170,16 +172,16 @@
               <div class="mt-2">
                 <label class="block mt-4">
                   <span class="text-gray-700">Tenant Url: </span>
-                    {{currentTenant.TenantUrl}} 
+                  {{ currentTenant.TenantUrl }}
                 </label>
                 <label class="block mt-4">
                   <span class="text-gray-700">Type: </span>
-                    {{ title }} 
-                </label>          
+                  {{ title }}
+                </label>
 
                 <label class="block mt-4">
                   <span class="text-gray-700">Enviroment</span>
-                  <select v-model="Enviroment" Id= "Enviroment" class="form-select mt-1 block w-full">
+                  <select Id="Enviroment" v-model="Enviroment" class="form-select mt-1 block w-full">
                     <option value="dev">Dev</option>
                     <option value="test">Test</option>
                     <option value="production">Production</option>
@@ -188,7 +190,7 @@
 
                 <label class="block mt-4">
                   <span class="text-gray-700">Stream To Execute</span>
-                  <select  v-model="StreamToExecute" Id= "StreamToExecute" class="form-select mt-1 block w-full">
+                  <select Id="StreamToExecute" v-model="StreamToExecute" class="form-select mt-1 block w-full">
                     <option value="Stream1">Stream 1</option>
                     <option value="Stream2">Stream 2</option>
                     <option value="Stream3">Stream 3</option>
@@ -197,7 +199,7 @@
 
                 <label class="block mt-4">
                   <span class="text-gray-700">Mode</span>
-                  <select v-model="Mode" id="Mode" class="form-select mt-1 block w-full">
+                  <select id="Mode" v-model="Mode" class="form-select mt-1 block w-full">
                     <option value="daily">Daily</option>
                     <option value="missing">Missing</option>
                     <option value="backfill">Backfill</option>
@@ -205,22 +207,22 @@
                 </label>
                 <label class="block mt-4">
                   <span class="text-gray-700">Notifications</span>
-                  <select v-model="Notifications" id="Notifications" class="form-select mt-1 block w-full">
+                  <select id="Notifications" v-model="Notifications" class="form-select mt-1 block w-full">
                     <option value="True">True</option>
                     <option value="False">False</option>
                   </select>
                 </label>
                 <label class="block mt-4">
                   <span class="text-gray-700">Multithreaded</span>
-                  <select v-model="Multithreaded" id="Multithreaded" class="form-select mt-1 block w-full">
+                  <select id="Multithreaded" v-model="Multithreaded" class="form-select mt-1 block w-full">
                     <option value="True">True</option>
                     <option value="False">False</option>
                   </select>
-                </label>                                
-                
+                </label>
+
                 <label class="block mt-4">
                   <span class="text-gray-700">Accounts</span>
-                  <select v-model="Accounts" id="Accounts" class="form-select mt-1 block w-full">
+                  <select id="Accounts" v-model="Accounts" class="form-select mt-1 block w-full">
                     <option value="Account1">Account 1</option>
                     <option value="Account2">Account 2</option>
                     <option value="Account3">Account 3</option>
@@ -257,7 +259,6 @@
       </div>
     </Dialog>
   </TransitionRoot>
-
 
   <div class="p-4 mt-8 sm:px-8 sm:py-4">
     <div class="p-4 bg-white rounded">
@@ -730,7 +731,6 @@ import {
   DialogTitle,
 } from '@headlessui/vue'
 import { ref } from 'vue'
-import axios from 'axios'
 
 export default {
   components: {
@@ -774,11 +774,7 @@ export default {
       Mode: null,
       Notifications: false,
       Multithreaded: false,
-      Mode: null,
-      cAccounts: null,
-
-
-
+      Accounts: null,
     }
   },
   mounted: function () {
@@ -794,67 +790,21 @@ export default {
       this.runDialogVisible = true
     },
     closeDialog: function () {
-      console.log('TenantUrl: ' + this.currentTenant.TenantUrl )
-      console.log('title: ' + this.title )
-      console.log('Enviroment: ' + this.Enviroment )
-      console.log('StreamToExecute: ' + this.StreamToExecute )
-      console.log('Mode: ' + this.Mode )
-      console.log('Notifications: ' + this.Notifications )
-      console.log('Multithreaded: ' + this.Multithreaded )
-      console.log('Mode: ' + this.Mode )
-      console.log('Accounts: ' + this.Accounts )
+      console.log('TenantUrl: ' + this.currentTenant.TenantUrl)
+      console.log('title: ' + this.title)
+      console.log('Enviroment: ' + this.Enviroment)
+      console.log('StreamToExecute: ' + this.StreamToExecute)
+      console.log('Mode: ' + this.Mode)
+      console.log('Notifications: ' + this.Notifications)
+      console.log('Multithreaded: ' + this.Multithreaded)
+      console.log('Mode: ' + this.Mode)
+      console.log('Accounts: ' + this.Accounts)
 
       this.dialogVisible = false
       this.runDialogVisible = false
     },
     handleIntegrationCreation: function () {
       console.log('Should create the integration')
-    },
-    fetchData: function () {
-      this.fetchingTenants = true
-      const url = 'https://death-to-retool.azurewebsites.net/api/tenants'
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantList = result.data
-          console.log(this.tenantList)
-        })
-        .catch(() => {
-          console.log('No tenants');
-          this.tenantList = [ {TenantID: '12345', TenantName: 'Konrad', TenantUrl: 'Konrad'},
-                              {TenantID: '12346', TenantName: 'Mike', TenantUrl: 'Mike'}]
-        })
-        .finally(() => {
-          this.currentTenant = this.tenantList.length ? this.tenantList[0].TenantID : null
-          this.fetchingTenants = false
-          //this.fetchTenantDataSources()
-        })
-    },
-    onTenantSelectChange(event) {
-      console.log('This', this.currentTenant)
-      this.fetchTenantDataSources()
-    },
-    onTenantDataSourceSelectChange(event) {
-      this.currentTenantDataSource = event.target.value
-    },
-    fetchTenantDataSources() {
-      this.fetchingDataSources = true
-      console.log(this.currentTenant.TenantID)
-      const url = `https://death-to-retool.azurewebsites.net/api/datasources/${this.currentTenant.TenantID}`
-      console.log(url)
-      axios
-        .get(url)
-        .then((result) => {
-          console.log(result.data)
-          this.tenantDataSources = result.data
-          console.log(this.tenantDataSources)
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.fetchingDataSources = false
-        })
     },
   },
 }
